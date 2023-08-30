@@ -10,7 +10,7 @@ CREATE TABLE products (
     image VARCHAR(255) NOT NULL,
     created_at timestamptz NOT NULL DEFAULT now(),
     updated_at timestamptz NULL,
-    deleted_at timestampz NULL,
+    deleted_at timestamptz NULL,
     CONSTRAINT fk_porducts_category FOREIGN KEY (category_id) REFERENCES product_categories(id) ON DELETE CASCADE
 );
 
