@@ -12,4 +12,5 @@ type Repository interface {
 	GetProductCategoryByID(ctx context.Context, id uint) (models.ProductCategory, error)
 	CreateProductGift(ctx context.Context, product models.Product) (models.Product, error)
 	GetProductGiftsByID(ctx context.Context, id uuid.UUID) (models.Product, error)
+	UpdateProductGift(ctx context.Context, request models.Product) (models.Product, error)
 }

@@ -38,6 +38,7 @@ type (
 		ID           string    `json:"id"`
 		Name         string    `json:"name"`
 		CategoryID   uint      `json:"category_id"`
+		CategoryName *string   `json:"category_name,omitempty"`
 		Descriptions string    `json:"descriptions"`
 		Qty          uint16    `json:"qty"`
 		Price        float64   `json:"price"`
@@ -46,5 +47,9 @@ type (
 		Image        string    `json:"image"`
 		CreatedAt    time.Time `json:"created_at"`
 		UpdatedAt    time.Time `json:"updated_at"`
+	}
+
+	GiftRequestDescriptions struct {
+		Descriptions string `form:"descriptions" validate:"required"`
 	}
 )

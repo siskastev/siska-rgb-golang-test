@@ -21,5 +21,7 @@ func RegisterRoutes(route fiber.Router, jwtMiddleware *middleware.AuthMiddleware
 
 	groupGift := route.Group("/gifts")
 	groupGift.Post("", jwtMiddleware.IsAdmin(), handler.CreateGifts)
+	groupGift.Put("/:id", jwtMiddleware.IsAdmin(), handler.UpdateProductGift)
+	groupGift.Patch("/:id", jwtMiddleware.IsAdmin(), handler.UpdateProductGiftDescriptions)
 	groupGift.Get("/:id", handler.GetGiftsByID)
 }
