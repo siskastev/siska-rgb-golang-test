@@ -18,4 +18,8 @@ func RegisterRoutes(route fiber.Router, jwtMiddleware *middleware.AuthMiddleware
 
 	route.Use(jwtMiddleware.AuthRequired())
 	route.Get("/products/categories", handler.GetProductCategories)
+
+	groupGift := route.Group("/gifts")
+	groupGift.Post("", jwtMiddleware.IsAdmin(), handler.CreateGifts)
+	groupGift.Get("/:id", handler.GetGiftsByID)
 }

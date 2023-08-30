@@ -10,9 +10,8 @@ import (
 )
 
 func Setup(app *fiber.App) {
-	api := app.Group("/api")
 	jwtMiddleware := middleware.NewAuthMiddleware(os.Getenv("JWT_PRIVATE_KEY"))
 	//add route here
-	users.RegisterRoutes(api, jwtMiddleware)
-	product.RegisterRoutes(api, jwtMiddleware)
+	users.RegisterRoutes(app, jwtMiddleware)
+	product.RegisterRoutes(app, jwtMiddleware)
 }

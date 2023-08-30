@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/go-redis/redis/v8"
+	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
 
@@ -49,4 +50,40 @@ func (p *productRepository) GetProductCategories(ctx context.Context) ([]models.
 
 	return productCategories, nil
 
+}
+
+func (p *productRepository) GetProductCategoryByID(ctx context.Context, id uint) (category models.ProductCategory, err error) {
+	if err := p.db.WithContext(ctx).Where(models.ProductCategory{ID: id}).First(&category).Error; err != nil {
+		return category, err
+	}
+	return category, nil
+}
+
+func (p *productRepository) CreateProductGift(ctx context.Context, product models.Product) (models.Product, error) {
+	if err := p.db.WithContext(ctx).Create(&product).Error; err != nil {
+		return product, err
+	}
+
+	// Clear cache for all battles
+	keys, err := p.redisClient.Keys(ctx, "gifts:*").Result()
+	if err != nil {
+		return product, err
+	}
+
+	if len(keys) > 0 {
+		result := p.redisClient.Del(ctx, keys...)
+		if result.Err() != nil {
+			return product, result.Err()
+		}
+	}
+
+	return product, nil
+}
+
+func (p *productRepository) GetProductGiftsByID(ctx context.Context, id uuid.UUID) (models.Product, error) {
+	product := models.Product{}
+	if err := p.db.WithContext(ctx).Where("id = ? AND point > 0", id).First(&product).Error; err != nil {
+		return product, err
+	}
+	return product, nil
 }
