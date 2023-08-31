@@ -8,6 +8,7 @@ import (
 	"os/signal"
 	"siska-rgb-golang-test/internal/database"
 	"siska-rgb-golang-test/internal/middleware"
+	"siska-rgb-golang-test/internal/redis"
 	"siska-rgb-golang-test/internal/routes"
 	"syscall"
 	"time"
@@ -24,6 +25,8 @@ func main() {
 	}
 
 	database.Init()
+
+	redis.Init()
 
 	app := fiber.New(fiber.Config{
 		CaseSensitive: true,

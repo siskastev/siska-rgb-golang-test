@@ -35,14 +35,22 @@ func (a *AuthMiddleware) AuthRequired() fiber.Handler {
 	}
 }
 
-func (a *AuthMiddleware) IsAdmin() fiber.Handler {
+func (a *AuthMiddleware) HasRoles(roles ...string) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		user, found := c.Locals("user").(*models.UserResponse)
 		if !found {
 			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"message": "Unauthorized"})
 		}
 
-		if user.Role != models.ADMIN_ROLE {
+		isAuthorized := false
+		for _, role := range roles {
+			if string(user.Role) == role {
+				isAuthorized = true
+				break
+			}
+		}
+
+		if !isAuthorized {
 			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"message": "Unauthorized Role Access"})
 		}
 
