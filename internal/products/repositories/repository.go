@@ -13,4 +13,6 @@ type Repository interface {
 	CreateProductGift(ctx context.Context, product models.Product) (models.Product, error)
 	GetProductGiftsByID(ctx context.Context, id uuid.UUID) (models.Product, error)
 	UpdateProductGift(ctx context.Context, request models.Product) (models.Product, error)
+	GetGiftsPagination(ctx context.Context, request models.GiftsFilter) ([]models.Product, error)
+	DeleteGiftByID(ctx context.Context, id uuid.UUID) error
 }

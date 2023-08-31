@@ -49,7 +49,28 @@ type (
 		UpdatedAt    time.Time `json:"updated_at"`
 	}
 
-	GiftRequestDescriptions struct {
-		Descriptions string `form:"descriptions" validate:"required"`
+	GiftRequestStock struct {
+		Qty uint16 `form:"qty" validate:"required,min=1,max=1000"`
+	}
+
+	GiftsResponsePagination struct {
+		Data []GiftsResponse `json:"data"`
+		Meta MetaPagination  `json:"meta"`
+	}
+
+	MetaPagination struct {
+		TotalData   int `json:"total_data"`
+		TotalPage   int `json:"total_page"`
+		CurrentPage int `json:"current_page"`
+		NextPage    int `json:"next_page"`
+		PageSize    int `json:"page_size"`
+	}
+
+	GiftsFilter struct {
+		Page     int     `form:"page"`
+		PageSize int     `form:"page_size"`
+		IsStock  bool    `form:"is_stock"`
+		Rating   float32 `form:"rating"`
+		SortBy   string  `form:"sort_by"`
 	}
 )

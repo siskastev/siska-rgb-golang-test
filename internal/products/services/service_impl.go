@@ -176,11 +176,11 @@ func (p *productService) UpdateProductGift(ctx context.Context, request models.G
 	return response, nil
 }
 
-func (p *productService) UpdateProductGiftDescriptions(ctx context.Context, request models.GiftRequestDescriptions, id uuid.UUID) (models.GiftsResponse, error) {
+func (p *productService) UpdateProductGiftStock(ctx context.Context, request models.GiftRequestStock, id uuid.UUID) (models.GiftsResponse, error) {
 	gift := models.Product{
-		ID:           id,
-		Descriptions: request.Descriptions,
-		UpdatedAt:    time.Now(),
+		ID:        id,
+		Qty:       request.Qty,
+		UpdatedAt: time.Now(),
 	}
 
 	result, err := p.productRepository.UpdateProductGift(ctx, gift)
@@ -204,4 +204,65 @@ func (p *productService) UpdateProductGiftDescriptions(ctx context.Context, requ
 
 	return response, nil
 
+}
+
+func (p *productService) GetGiftsPagination(ctx context.Context, filter models.GiftsFilter) (models.GiftsResponsePagination, error) {
+	ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
+	defer cancel()
+
+	result, err := p.productRepository.GetGiftsPagination(ctx, filter)
+	if err != nil {
+		return models.GiftsResponsePagination{}, err
+	}
+
+	totalData := len(result)
+	totalPage := (int(totalData) + filter.PageSize - 1) / filter.PageSize
+	nextPage := filter.Page + 1
+	if nextPage > totalPage {
+		nextPage = 0
+	}
+	metaData := models.MetaPagination{
+		TotalData:   totalData,
+		TotalPage:   totalPage,
+		CurrentPage: filter.Page,
+		NextPage:    nextPage,
+		PageSize:    filter.PageSize,
+	}
+
+	gifts := []models.GiftsResponse{}
+	for _, gift := range result {
+		gifts = append(gifts, models.GiftsResponse{
+			ID:           gift.ID.String(),
+			Name:         gift.Name,
+			CategoryID:   gift.CategoryID,
+			CategoryName: &gift.ProductCategory.Name,
+			Descriptions: gift.Descriptions,
+			Qty:          gift.Qty,
+			Price:        gift.Price,
+			Point:        gift.Point,
+			Rating:       gift.Rating,
+			Image:        gift.Image,
+			CreatedAt:    gift.CreatedAt,
+			UpdatedAt:    gift.UpdatedAt,
+		})
+	}
+
+	response := models.GiftsResponsePagination{
+		Data: gifts,
+		Meta: metaData,
+	}
+
+	return response, nil
+}
+
+func (p *productService) DeleteProductGift(ctx context.Context, id uuid.UUID) error {
+	ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
+	defer cancel()
+
+	err := p.productRepository.DeleteGiftByID(ctx, id)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

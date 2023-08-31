@@ -3,6 +3,7 @@ package handlers
 import (
 	"siska-rgb-golang-test/internal/models"
 	"siska-rgb-golang-test/internal/products/services"
+	"strconv"
 
 	"siska-rgb-golang-test/internal/helpers/uuid"
 	helpers "siska-rgb-golang-test/internal/helpers/validator"
@@ -180,10 +181,10 @@ func (h *HandlerProduct) UpdateProductGift(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{"data": giftResponse})
 }
 
-func (h *HandlerProduct) UpdateProductGiftDescriptions(c *fiber.Ctx) error {
+func (h *HandlerProduct) UpdateProductGiftStock(c *fiber.Ctx) error {
 	logger := c.Locals("logger").(*logrus.Logger)
 
-	var request models.GiftRequestDescriptions
+	var request models.GiftRequestStock
 
 	if err := c.BodyParser(&request); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"message": "Invalid request payload"})
@@ -200,7 +201,7 @@ func (h *HandlerProduct) UpdateProductGiftDescriptions(c *fiber.Ctx) error {
 		return helpers.ValidationErrorResponse(c, err.(validator.ValidationErrors))
 	}
 
-	giftResponse, err := h.ProductService.UpdateProductGiftDescriptions(c.Context(), request, id)
+	giftResponse, err := h.ProductService.UpdateProductGiftStock(c.Context(), request, id)
 	if err != nil {
 		logger.WithFields(logrus.Fields{
 			"method":  c.Method(),
@@ -212,4 +213,63 @@ func (h *HandlerProduct) UpdateProductGiftDescriptions(c *fiber.Ctx) error {
 	}
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{"data": giftResponse})
+}
+
+func (h *HandlerProduct) GetGifts(c *fiber.Ctx) error {
+	logger := c.Locals("logger").(*logrus.Logger)
+	var filter models.GiftsFilter
+	page, _ := strconv.Atoi(c.Query("page", "1"))
+	pageSize, _ := strconv.Atoi(c.Query("page_size", "10"))
+	if page < 1 {
+		page = 1
+	}
+
+	if pageSize < 1 {
+		pageSize = 10
+	}
+	filter.Page = page
+	filter.PageSize = pageSize
+	filter.SortBy = c.Query("sort_by", "-created_at")
+	filter.IsStock, _ = strconv.ParseBool(c.Query("is_stock", "false"))
+	rating, _ := strconv.ParseFloat(c.Query("rating", "0"), 64)
+	filter.Rating = float32(rating)
+
+	if err := c.QueryParser(&filter); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"message": "Invalid request query"})
+	}
+
+	gifts, err := h.ProductService.GetGiftsPagination(c.Context(), filter)
+	if err != nil {
+		logger.WithFields(logrus.Fields{
+			"method": c.Method(),
+			"route":  c.Path(),
+			"error":  err.Error(),
+		}).Error("Failed to get gifts")
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": err.Error()})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(gifts)
+}
+
+func (h *HandlerProduct) DeleteGiftsByID(c *fiber.Ctx) error {
+	logger := c.Locals("logger").(*logrus.Logger)
+
+	id := uuid.ParseUUID(c.Params("id"))
+
+	isGiftIDExists, err := h.ProductService.IsProductGiftIDExist(c.Context(), id)
+	if !isGiftIDExists {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"message": err.Error()})
+	}
+
+	err = h.ProductService.DeleteProductGift(c.Context(), id)
+	if err != nil {
+		logger.WithFields(logrus.Fields{
+			"method": c.Method(),
+			"route":  c.Path(),
+			"error":  err.Error(),
+		}).Error("Failed to delete gift")
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": err.Error()})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"message": "Gift deleted successfully"})
 }
