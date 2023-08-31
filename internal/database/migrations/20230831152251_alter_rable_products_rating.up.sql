@@ -1,0 +1,2 @@
+ALTER TABLE products
+    ALTER COLUMN rating TYPE NUMERIC(3, 2) DEFAULT 0;
