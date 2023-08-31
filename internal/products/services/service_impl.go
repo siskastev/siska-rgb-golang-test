@@ -2,6 +2,7 @@ package services
 
 import (
 	"context"
+	"math"
 	"mime/multipart"
 	helpers "siska-rgb-golang-test/internal/helpers/image"
 	"siska-rgb-golang-test/internal/models"
@@ -124,7 +125,7 @@ func (p *productService) GetProductGiftByID(ctx context.Context, id uuid.UUID) (
 		Qty:          result.Qty,
 		Price:        result.Price,
 		Point:        result.Point,
-		Rating:       result.Rating,
+		Rating:       float32(math.Round(float64(result.Rating))),
 		Image:        result.Image,
 		CreatedAt:    result.CreatedAt,
 		UpdatedAt:    result.UpdatedAt,
@@ -240,7 +241,7 @@ func (p *productService) GetGiftsPagination(ctx context.Context, filter models.G
 			Qty:          gift.Qty,
 			Price:        gift.Price,
 			Point:        gift.Point,
-			Rating:       gift.Rating,
+			Rating:       float32(math.Round(float64(gift.Rating))),
 			Image:        gift.Image,
 			CreatedAt:    gift.CreatedAt,
 			UpdatedAt:    gift.UpdatedAt,
