@@ -3,7 +3,7 @@ Technical Test Backend Developer
 
 ## About
 This repository contains the API gifts redeem project for the technical test using Golang. 
-The project provides CRUD operations for CRUD gifts, create redeem, create rating and functionalities to register and login users. 
+The project provides CRUD operations gifts, create redeem, create rating and functionalities to register and login users. 
 The system use role-based access control (RBAC) and allows access to gifts, redeem, rating using JWT authentication.
 
 ## Technologies
@@ -56,6 +56,9 @@ The `redemptions` table records redeem transactions by users.
 ### Rating Reviews
 The `rating_reviews` table is used to store user reviews and ratings of redeemed products.
 
+## Database Structure
+The PostgreSQL database structure used to store job-related information can be found and import database in the `docs/dump-rgb_gifts-202309012124.tar` file. This file contains the necessary SQL queries and schema to create and populate the required tables.
+
 ## API Endpoints
 ### Register
 * `POST /register`: Create a new register user.
@@ -89,8 +92,21 @@ In this application, database optimization is done in several ways:
 - **Caching with Redis**: Redis is used as a cache to store frequently accessed data, such as a list of product categories or the results of certain queries.
 - **Limit Settings**: The use of LIMIT is applied to query operations to retrieve a limited amount of data, avoiding retrieving all data if it is not needed.
 
+## Installation and Setup Local
+1. Clone the repository
+2. Navigate to the project directory:
+3. Rename or copy .env.example to .env and adjust database env and redis to your locale
+4. download depedencies :
+```bash
+go mod tidy
+```
+5. run main.go in directory cmd
+```bash
+go run .\cmd\main.go
+```
+
 ## Postman Collection
-A Postman collection `api-gifts-rolling-glory.postman_collection.json` is provided in this project. You can import the collection into Postman to quickly test the API endpoints. The collection includes pre-configured requests for each endpoint, allowing you to easily interact with the API and view the responses.
+A Postman collection `docs/api-gifts-rolling-glory.postman_collection.json` is provided in this project. You can import the collection into Postman to quickly test the API endpoints. The collection includes pre-configured requests for each endpoint, allowing you to easily interact with the API and view the responses.
 
 ## Authentication
 The API use API token authentication. To authenticate requests, include the API token in the request headers:
