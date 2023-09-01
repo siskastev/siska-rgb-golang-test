@@ -32,7 +32,7 @@ This application was built by implementing the principles of Clean Architecture 
 3. Services, contains the core business logic and use cases of the application.
 4. Handlers, Handle HTTP requests and connect these requests with appropriate services or become a connecting wall between the user and the system. Receive all input and validate input according to the standards used.
 
-In each module in this system there are repositories, services, handlers and routes to define HTTP routes for each request in the application.
+In each module in this system have repositories, services, handlers and routes to define HTTP routes for each request in the application.
 
 ## Entity-Relationship Diagram (ERD)
 The ERD illustrates the relationships between the entities (tables) in the database for the API Gifts Management project.
