@@ -135,9 +135,7 @@ func (p *productRepository) GetGiftsPagination(ctx context.Context, request mode
 		query = query.Where("qty > 0")
 	}
 
-	if request.Rating != 0 {
-		query = query.Where("rating >= ?", request.Rating)
-	}
+	query = query.Where("rating >= ?", request.Rating).Order("rating DESC")
 
 	switch request.SortBy {
 	case "created_at":
@@ -146,7 +144,7 @@ func (p *productRepository) GetGiftsPagination(ctx context.Context, request mode
 		query = query.Order("created_at DESC")
 	}
 
-	if condition := query.Order("rating DESC").Offset(offset).Limit(limit).Find(&products); condition.Error != nil {
+	if condition := query.Offset(offset).Limit(limit).Find(&products); condition.Error != nil {
 		return products, condition.Error
 	}
 
