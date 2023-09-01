@@ -7,6 +7,7 @@ import (
 	"github.com/google/uuid"
 )
 
+//go:generate mockgen -package=mocks -mock_names=Service=MockUserService -destination=mocks/user_service_mock.go -source=service.go
 type Service interface {
 	IsEmailExists(ctx context.Context, email string) (bool, error)
 	RegisterUser(ctx context.Context, request models.UserRequest) (models.UserResponse, error)
