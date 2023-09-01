@@ -1,0 +1,547 @@
+{
+	"info": {
+		"_postman_id": "61db40be-0219-4c59-9b10-0fa14a4305c4",
+		"name": "api-gifts-rolling-glory",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5515773"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"admin@rgb.id\",\r\n    \"password\":\"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9000/login",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"name\" : \"Hallo dia\",\r\n   \"email\":\"hallodia@gmail.com\",\r\n   \"password\":\"hallodia\" \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9000/register",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "Profile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9000/profile",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Profile",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Hallo Ini Kamu\",\r\n    \"email\": \"hallokamu@gmail.com\",\r\n    \"password\": \"hallokamu\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9000/profile",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"profile"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9000/products/categories",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"products",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "gifts",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Midnight Black 4/64 gb",
+									"type": "text"
+								},
+								{
+									"key": "category_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "descriptions",
+									"value": "Ukuran layar: 6.2 inci, Dual Edge Super AMOLED 2960 x 1440 (Quad HD+) 529 ppi, 18.5:9 Memori: RAM 6 GB (LPDDR4), ROM 64 GB, MicroSD up to 400GB Sistem operasi: Android 8.0 (Oreo) CPU: Exynos 9810 Octa-core (2.7GHz Quad + 1.7GHz Quad), 64 bit, 10nm processor Kamera: Super Speed Dual Pixel, 12 MP OIS (F1.5/F2.4 Dual Aperture) + 12MP OIS (F2.4) with LED flash, depan 8 MP, f/1.7, autofocus, 1440p@30fps, dual video call, Auto HDR SIM: Dual SIM (Nano-SIM) Baterai: Non-removable Li-Ion 3500 mAh , Fast Charging on wired and wireless",
+									"type": "text"
+								},
+								{
+									"key": "qty",
+									"value": "100",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "200000",
+									"type": "text"
+								},
+								{
+									"key": "point",
+									"value": "200000",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/siska_i3j1a2z/Downloads/Intersection 70.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:9000/gifts",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"gifts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "gifts-id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Hallo Midnight Black 4/64 gb",
+									"type": "text"
+								},
+								{
+									"key": "category_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "descriptions",
+									"value": "Ukuran layar: 6.2 inci, Dual Edge Super AMOLED 2960 x 1440 (Quad HD+) 529 ppi, 18.5:9 Memori: RAM 6 GB (LPDDR4), ROM 64 GB, MicroSD up to 400GB Sistem operasi: Android 8.0 (Oreo) CPU: Exynos 9810 Octa-core (2.7GHz Quad + 1.7GHz Quad), 64 bit, 10nm processor Kamera: Super Speed Dual Pixel, 12 MP OIS (F1.5/F2.4 Dual Aperture) + 12MP OIS (F2.4) with LED flash, depan 8 MP, f/1.7, autofocus, 1440p@30fps, dual video call, Auto HDR SIM: Dual SIM (Nano-SIM) Baterai: Non-removable Li-Ion 3500 mAh , Fast Charging on wired and wireless",
+									"type": "text"
+								},
+								{
+									"key": "qty",
+									"value": "100",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "200000",
+									"type": "text"
+								},
+								{
+									"key": "point",
+									"value": "200000",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/siska_i3j1a2z/Downloads/Intersection 70.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:9000/gifts/4039ae38-65a7-4402-89cc-b806b0a282af",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"gifts",
+								"4039ae38-65a7-4402-89cc-b806b0a282af"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "gifts-id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9000/gifts/0d839986-b88f-494c-b1a8-f02f760c7fd1",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"gifts",
+								"0d839986-b88f-494c-b1a8-f02f760c7fd1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "gifts-id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"qty\" : 110\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9000/gifts/4039ae38-65a7-4402-89cc-b806b0a282af",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"gifts",
+								"4039ae38-65a7-4402-89cc-b806b0a282af"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "gifts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9000/gifts?page=1&page_size=10&sort_by=-created_at",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"gifts"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "page_size",
+									"value": "10"
+								},
+								{
+									"key": "is_stock",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "rating",
+									"value": "4",
+									"disabled": true
+								},
+								{
+									"key": "sort_by",
+									"value": "-created_at"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "gifts-id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:9000/gifts/4039ae38-65a7-4402-89cc-b806b0a282af",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"gifts",
+								"4039ae38-65a7-4402-89cc-b806b0a282af"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "redemptions",
+			"item": [
+				{
+					"name": "redeem-id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:9000/gifts/0d839986-b88f-494c-b1a8-f02f760c7fd1/redeem",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"gifts",
+								"0d839986-b88f-494c-b1a8-f02f760c7fd1",
+								"redeem"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "rating",
+			"item": [
+				{
+					"name": "rating-id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"rating\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9000/gifts/0d839986-b88f-494c-b1a8-f02f760c7fd1/rating",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"gifts",
+								"0d839986-b88f-494c-b1a8-f02f760c7fd1",
+								"rating"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	]
+}
