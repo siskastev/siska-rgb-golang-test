@@ -18,7 +18,8 @@ func RegisterRoutes(route fiber.Router, jwtMiddleware *middleware.AuthMiddleware
 	route.Post("/register", handler.Register)
 	route.Post("/login", handler.Login)
 
-	route.Use(jwtMiddleware.AuthRequired())
-	route.Get("/profile", handler.Profile)
-	route.Patch("/profile", handler.Update)
+	groupProfile := route.Group("/profile")
+	groupProfile.Use(jwtMiddleware.AuthRequired())
+	groupProfile.Get("/profile", handler.Profile)
+	groupProfile.Patch("/profile", handler.Update)
 }
