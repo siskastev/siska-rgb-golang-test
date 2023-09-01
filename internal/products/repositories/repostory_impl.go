@@ -136,7 +136,7 @@ func (p *productRepository) GetGiftsPagination(ctx context.Context, request mode
 	}
 
 	if request.Rating != 0 {
-		query = query.Where("rating > ?", request.Rating)
+		query = query.Where("rating >= ?", request.Rating)
 	}
 
 	switch request.SortBy {
