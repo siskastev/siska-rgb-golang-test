@@ -4,7 +4,7 @@ Technical Test Backend Developer
 ## About
 This repository contains the API gifts redeem project for the technical test using Golang. 
 The project provides CRUD operations gifts, create redeem, create rating and functionalities to register and login users. 
-The system use role-based access control (RBAC) and allows access to gifts, redeem, rating using JWT authentication.
+The system use role-based access control (RBAC) and allows access to gifts, redeem, rating using JWT authentication except get gifts, get gifts by ID and product categories can access without authentication.
 
 ## Technologies
 - Golang 1.19
